@@ -1,0 +1,20 @@
+# Django settings
+DEBUG=True
+SECRET_KEY=django-insecure-dev-key-change-in-production
+DJANGO_SETTINGS_MODULE=geo_points.settings
+ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
+
+# Database settings
+POSTGRES_DB=geo_points
+POSTGRES_USER=geo_points_user
+POSTGRES_PASSWORD=geo_points_password
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
+
+# JWT settings
+ACCESS_TOKEN_LIFETIME_MINUTES=60
+REFRESH_TOKEN_LIFETIME_DAYS=1
+
+# pgAdmin settings
+PGADMIN_DEFAULT_EMAIL=admin@geo-points.com
+PGADMIN_DEFAULT_PASSWORD=admin123

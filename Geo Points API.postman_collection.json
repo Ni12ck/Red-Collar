@@ -1,0 +1,904 @@
+{
+	"info": {
+		"_postman_id": "be47d729-225f-49ec-834a-8dbcfa110452",
+		"name": "Geo Points API",
+		"description": "Postman collection for testing Geo Points and Messages API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "51023433",
+		"_collection_link": "https://pxlsaw12-1420366.postman.co/workspace/Ni12ck's-Workspace~6ae25f22-1da3-44ce-8b74-bfc6bd1a6afc/collection/51023433-be47d729-225f-49ec-834a-8dbcfa110452?action=share&source=collection_link&creator=51023433"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login - Get JWT Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.collectionVariables.set('access_token', response.access);",
+									"    pm.collectionVariables.set('refresh_token', response.refresh);",
+									"    console.log('Tokens saved successfully');",
+									"} else {",
+									"    console.log('Failed to get tokens');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/token/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"token",
+								""
+							]
+						},
+						"description": "Get JWT access and refresh tokens for authentication"
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    pm.collectionVariables.set('access_token', response.access);",
+									"    console.log('Access token refreshed');",
+									"} else {",
+									"    console.log('Failed to refresh token');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/token/refresh/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"token",
+								"refresh",
+								""
+							]
+						},
+						"description": "Refresh JWT access token using refresh token"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Points API",
+			"item": [
+				{
+					"name": "Get All Points",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/points/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"points",
+								""
+							]
+						},
+						"description": "Get list of all points for authenticated user"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Point - Red Square",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    pm.collectionVariables.set('point_id', response.id);",
+									"    console.log('Point created with ID:', response.id);",
+									"} else {",
+									"    console.log('Failed to create point');",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"latitude\": 55.7558,\n  \"longitude\": 37.6176,\n  \"title\": \"Красная площадь\",\n  \"description\": \"Главная площадь Москвы\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/points/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"points",
+								""
+							]
+						},
+						"description": "Новая точка - Красная площадь"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Point - Red collar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    pm.collectionVariables.set('point_id', response.id);",
+									"    console.log('Point created with ID:', response.id);",
+									"} else {",
+									"    console.log('Failed to create point');",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"latitude\": 51.685953, \n  \"longitude\": 39.169619,\n  \"title\": \"Red collar \",\n  \"description\": \"Офис Red collar в Воронеже\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/points/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"points",
+								""
+							]
+						},
+						"description": "Новая точка - Офис Red collar в Воронеже"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Point - Monument to Pushkin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    pm.collectionVariables.set('point_id', response.id);",
+									"    console.log('Point created with ID:', response.id);",
+									"} else {",
+									"    console.log('Failed to create point');",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"latitude\": 51.6712,\n  \"longitude\": 39.2172,\n  \"title\": \"Памятник Пушкину\",\n  \"description\": \"Памятник Пушкину в Воронеже\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/points/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"points",
+								""
+							]
+						},
+						"description": "Новая точка - Памятник Пушкину в Воронеже"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Point - Monument to the Fighters of the Revolution of 1905",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    pm.collectionVariables.set('point_id', response.id);",
+									"    console.log('Point created with ID:', response.id);",
+									"} else {",
+									"    console.log('Failed to create point');",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"latitude\": 56.995509, \n  \"longitude\": 40.980679,\n  \"title\": \"Памятник борцам революции\",\n  \"description\": \"Памятник борцам революции 1905 года в Иваново\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/points/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"points",
+								""
+							]
+						},
+						"description": "Новая точка - Памятник борцам революции 1905 года в Иваново"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Point - Bolshoi Theatre",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"latitude\": 55.7601,\n  \"longitude\": 37.6186,\n  \"title\": \"Большой театр\",\n  \"description\": \"Исторический театр в центре Москвы\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/points/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"points",
+								""
+							]
+						},
+						"description": "Новая точка - Большой театр"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Point - Invalid Coordinates",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"latitude\": 91,\n  \"longitude\": 37.6176,\n  \"title\": \"Invalid Point\",\n  \"description\": \"This should fail validation\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/points/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"points",
+								""
+							]
+						},
+						"description": "Test validation - latitude > 90 should fail"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Point by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/points/{{point_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"points",
+								"{{point_id}}",
+								""
+							]
+						},
+						"description": "Get specific point by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Point",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Обновленная Красная площадь\",\n  \"description\": \"Главная площадь Москвы с обновленным описанием\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/points/{{point_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"points",
+								"{{point_id}}",
+								""
+							]
+						},
+						"description": "Update point title and description"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Points by Radius - 1km",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/points/search/?latitude=55.7558&longitude=37.6176&radius=1.0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"points",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "latitude",
+									"value": "55.7558"
+								},
+								{
+									"key": "longitude",
+									"value": "37.6176"
+								},
+								{
+									"key": "radius",
+									"value": "1.0"
+								}
+							]
+						},
+						"description": "Search for points within 1km radius of Red Square"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Points by Radius - 5km",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/points/search/?latitude=55.7558&longitude=37.6176&radius=5.0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"points",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "latitude",
+									"value": "55.7558"
+								},
+								{
+									"key": "longitude",
+									"value": "37.6176"
+								},
+								{
+									"key": "radius",
+									"value": "5.0"
+								}
+							]
+						},
+						"description": "Search for points within 5km radius of Red Square"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Points - Invalid Parameters",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/points/search/?latitude=invalid&longitude=37.6176&radius=1.0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"points",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "latitude",
+									"value": "invalid"
+								},
+								{
+									"key": "longitude",
+									"value": "37.6176"
+								},
+								{
+									"key": "radius",
+									"value": "1.0"
+								}
+							]
+						},
+						"description": "Test error handling - invalid latitude parameter"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Messages API",
+			"item": [
+				{
+					"name": "Get All Messages",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/messages/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"messages",
+								""
+							]
+						},
+						"description": "Get list of all messages for authenticated user"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Message for Point",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const response = pm.response.json();",
+									"    pm.collectionVariables.set('message_id', response.id);",
+									"    console.log('Message created with ID:', response.id);",
+									"} else {",
+									"    console.log('Failed to create message');",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"point\": 2,\n  \"content\": \"Это тестовое сообщение для точки. Привет из Москвы!\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/messages/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"messages",
+								""
+							]
+						},
+						"description": "Create a new message for the created point"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Another Message",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"point\": {{point_id}},\n  \"content\": \"Второе сообщение для этой точки. Красивый вид на Красную площадь!\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/messages/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"messages",
+								""
+							]
+						},
+						"description": "Create another message for the same point"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Message by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/messages/{{message_id}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"messages",
+								"{{message_id}}",
+								""
+							]
+						},
+						"description": "Get specific message by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Search Messages by Radius",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/messages/search/?latitude=55.7558&longitude=37.6176&radius=2.0",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"messages",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "latitude",
+									"value": "55.7558"
+								},
+								{
+									"key": "longitude",
+									"value": "37.6176"
+								},
+								{
+									"key": "radius",
+									"value": "2.0"
+								}
+							]
+						},
+						"description": "Search for messages within 2km radius of Red Square"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Error Testing",
+			"item": [
+				{
+					"name": "Unauthorized Access",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/points/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"points",
+								""
+							]
+						},
+						"description": "Test unauthorized access (should return 401)"
+					},
+					"response": []
+				},
+				{
+					"name": "Invalid JWT Token",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer invalid_token_here"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/points/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"points",
+								""
+							]
+						},
+						"description": "Test invalid JWT token (should return 401)"
+					},
+					"response": []
+				},
+				{
+					"name": "Not Found - Invalid Point ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/points/99999/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"points",
+								"99999",
+								""
+							]
+						},
+						"description": "Test accessing non-existent point (should return 404)"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"// Auto-refresh token if it's close to expiry",
+					"const token = pm.collectionVariables.get('access_token');",
+					"if (token) {",
+					"    try {",
+					"        const payload = JSON.parse(atob(token.split('.')[1]));",
+					"        const expiry = payload.exp * 1000;",
+					"        const now = Date.now();",
+					"        const fiveMinutes = 5 * 60 * 1000;",
+					"        ",
+					"        if (expiry - now < fiveMinutes) {",
+					"            console.log('Token expiring soon, refreshing...');",
+					"            // Note: You might want to implement automatic refresh here",
+					"        }",
+					"    } catch (e) {",
+					"        console.log('Could not parse token');",
+					"    }",
+					"}"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "refresh_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "point_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "message_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
