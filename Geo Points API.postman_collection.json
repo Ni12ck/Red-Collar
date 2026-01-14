@@ -652,7 +652,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"point\": 2,\n  \"content\": \"Это тестовое сообщение для точки. Привет из Москвы!\"\n}"
+							"raw": "{\n  \"point\": 5,\n  \"content\": \"Это театр?\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/messages/",
@@ -739,7 +739,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/api/messages/search/?latitude=55.7558&longitude=37.6176&radius=2.0",
+							"raw": "{{base_url}}/api/messages/search/?latitude=51.685953&longitude=39.169619&radius=2.0",
 							"host": [
 								"{{base_url}}"
 							],
@@ -752,11 +752,11 @@
 							"query": [
 								{
 									"key": "latitude",
-									"value": "55.7558"
+									"value": "51.685953"
 								},
 								{
 									"key": "longitude",
-									"value": "37.6176"
+									"value": "39.169619"
 								},
 								{
 									"key": "radius",
